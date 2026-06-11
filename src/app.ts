@@ -1,7 +1,10 @@
 import express,{Application,Request,Response}  from "express";
 const app:Application = express();
 const PORT:number = 3000;
-require("./Model/index.ts")
+import * as dotenv from 'dotenv'
+dotenv.config();
+import "./Database/connection"
+// require("./Model/index.ts")
 
 app.get("/",(req:Request,res:Response)=>{
   res.send("hello world");
