@@ -5,18 +5,16 @@ import * as dotenv from 'dotenv'
 dotenv.config();
 import "./Database/connection"
 // require("./Model/index.ts")
+import userRouter from "./Routes/userRoute";
 
-app.get("/",(req:Request,res:Response)=>{
+app.use(express.json());
+app.get("/",(req,res)=>{
   res.send("hello world");
-});
-
-app.get("/about",(req:Request,res:Response)=>{
-  res.send("about page");
 })
 
-app.get("/contact",(req:Request,res:Response)=>{
-  res.send("contact page");
-})
+app.use("",userRouter)
+
+
 
 app.listen(PORT,()=>{
   console.log("Server has started at port",PORT);
