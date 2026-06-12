@@ -6,13 +6,19 @@ dotenv.config();
 import "./Database/connection"
 // require("./Model/index.ts")
 import userRouter from "./Routes/userRoute";
+import postRouter from "./Routes/postRoute"
 
 app.use(express.json());
 app.get("/",(req,res)=>{
   res.send("hello world");
 })
 
-app.use("",userRouter)
+app.use("/",postRouter);
+
+app.use("",userRouter);
+
+app.use(express.static("./storage"));
+
 
 
 

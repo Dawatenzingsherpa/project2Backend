@@ -15,6 +15,7 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "multer": "^2.1.1",
     "mysql2": "^3.22.5",
     "nodemon": "^3.1.14",
     "reflect-metadata": "^0.2.2",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "@types/multer": "^2.1.0",
     "@types/node": "^25.9.2",
     "@types/sequelize": "^4.28.20",
     "rimraf": "^6.1.3",
