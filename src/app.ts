@@ -7,6 +7,7 @@ import "./Database/connection"
 // require("./Model/index.ts")
 import userRouter from "./Routes/userRoute";
 import postRouter from "./Routes/postRoute"
+import path from "node:path";
 
 app.use(express.json());
 app.get("/",(req,res)=>{
@@ -17,7 +18,9 @@ app.use("/",postRouter);
 
 app.use("",userRouter);
 
-app.use(express.static("./storage"));
+
+app.use(express.static(path.join(process.cwd(), "src/storage")));
+
 
 
 

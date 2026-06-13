@@ -3,8 +3,7 @@ import { error } from "node:console";
 import path from "node:path";
 export const storage:StorageEngine = multer.diskStorage({
     destination : function(req,file,cb){
-      console.log("dirname:", __dirname);
-      console.log("storage path:", path.join(__dirname, "../storage"));
+      
       const allowedFiles = ['image/jpg','image/jpeg','image/png'];
       if(!allowedFiles.includes(file.mimetype)){
        
