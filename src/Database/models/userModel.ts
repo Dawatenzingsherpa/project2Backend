@@ -23,6 +23,15 @@ class User extends Model{
   })
   declare id:string
 
+  @Column({
+    type : DataType.ENUM('customer','admin'),
+    defaultValue : 'customer',
+    allowNull: false,
+    validate: {
+      isIn: [['customer', 'admin']]
+    }
+  })
+  declare role : string
 
   @Column({
     type : DataType.STRING

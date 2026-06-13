@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 class AuthController{
   public static async registerUser(req:Request,res:Response):Promise<void>{
 
-    const {username,email,password}  = req.body;
+    const {username,email,password,role}  = req.body;
 
     if(!username|| !email || !password){
       res.status(400).json({
@@ -14,8 +14,21 @@ class AuthController{
       })
       return
     }
+    const [data] = await User.findAll({
+      where : {
+        email : email
+      }
+    })
+    console.log(data);
+    if(data){
+      res.status(404).json({
+        message : "Email Already Registered"
+      })
+      return
+    }
 
     await User.create({
+      role : role && role,
       username,
       email,
       password : bcrypt.hashSync(password,8)
