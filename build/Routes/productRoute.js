@@ -37,25 +37,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-const PORT = 3000;
-const dotenv = __importStar(require("dotenv"));
-dotenv.config();
-require("./Database/connection");
-// require("./Model/index.ts")
-const userRoute_1 = __importDefault(require("./Routes/userRoute"));
-const productRoute_1 = __importDefault(require("./Routes/productRoute"));
-const node_path_1 = __importDefault(require("node:path"));
-const adminSeeder_1 = __importDefault(require("./adminSeeder"));
-app.use(express_1.default.json());
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
-app.use("", userRoute_1.default);
-app.use("/admin/product", productRoute_1.default);
-app.use(express_1.default.static(node_path_1.default.join(process.cwd(), "src/storage")));
-(0, adminSeeder_1.default)();
-app.listen(PORT, () => {
-    console.log("Server has started at port", PORT);
-});
-//# sourceMappingURL=app.js.map
+const productController_1 = __importDefault(require("../Controllers/productController"));
+const multerConfig_1 = __importDefault(require("../Middleware/multerConfig"));
+const authMiddleware_1 = __importStar(require("../Middleware/authMiddleware"));
+const router = express_1.default.Router();
+router.route("/")
+    .post(authMiddleware_1.default.isAuthenticated, authMiddleware_1.default.restrictTo(authMiddleware_1.Role.Admin), multerConfig_1.default.single('image'), productController_1.default.addProduct);
+exports.default = router;
+//# sourceMappingURL=productRoute.js.map

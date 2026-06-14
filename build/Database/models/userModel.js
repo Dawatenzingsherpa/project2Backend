@@ -22,6 +22,17 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM('customer', 'admin'),
+        defaultValue: 'customer',
+        allowNull: false,
+        validate: {
+            isIn: [['customer', 'admin']]
+        }
+    }),
+    __metadata("design:type", String)
+], User.prototype, "role", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING
     }),
     __metadata("design:type", String)

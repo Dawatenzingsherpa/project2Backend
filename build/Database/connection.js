@@ -20,5 +20,6 @@ sequelize.authenticate()
 sequelize.sync({ force: false }).then(() => {
     console.log("synced");
 });
+console.log(Object.keys(sequelize.models));
 exports.default = sequelize;
 //# sourceMappingURL=connection.js.map

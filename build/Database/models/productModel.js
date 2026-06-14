@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-let Post = class Post extends sequelize_typescript_1.Model {
+let Product = class Product extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -19,31 +19,47 @@ __decorate([
         defaultValue: sequelize_typescript_1.DataType.UUIDV4
     }),
     __metadata("design:type", String)
-], Post.prototype, "id", void 0);
+], Product.prototype, "id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false
+    }),
+    __metadata("design:type", String)
+], Product.prototype, "productName", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.TEXT,
+        allowNull: false
+    }),
+    __metadata("design:type", String)
+], Product.prototype, "description", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false
+    }),
+    __metadata("design:type", Number)
+], Product.prototype, "productPrice", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false
+    }),
+    __metadata("design:type", Number)
+], Product.prototype, "productTotalStockQty", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
     }),
     __metadata("design:type", String)
-], Post.prototype, "title", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING
-    }),
-    __metadata("design:type", String)
-], Post.prototype, "description", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING
-    }),
-    __metadata("design:type", String)
-], Post.prototype, "imageUrl", void 0);
-Post = __decorate([
+], Product.prototype, "imageUrl", void 0);
+Product = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: 'posts',
-        modelName: "Post",
+        tableName: 'products',
+        modelName: "Product",
         timestamps: true
     })
-], Post);
-exports.default = Post;
-//# sourceMappingURL=postModel.js.map
+], Product);
+exports.default = Product;
+//# sourceMappingURL=productModel.js.map

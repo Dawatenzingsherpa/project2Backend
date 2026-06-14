@@ -1,1 +1,0 @@
-{"version":3,"file":"postRoute.js","sourceRoot":"","sources":["../../src/Routes/postRoute.ts"],"names":[],"mappings":";;;;;AAAA,sDAAsC;AACtC,mFAA0D;AAC1D,8EAA+C;AAE/C,MAAM,MAAM,GAAY,iBAAO,CAAC,MAAM,EAAE,CAAC;AAEzC,MAAM,CAAC,KAAK,CAAC,OAAO,CAAC;KACpB,IAAI,CAAC,sBAAM,CAAC,MAAM,CAAC,OAAO,CAAC,EAAC,wBAAc,CAAC,UAAU,CAAC,CAAC;AAExD,kBAAe,MAAM,CAAA"}
