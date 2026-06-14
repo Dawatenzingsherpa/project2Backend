@@ -23,5 +23,6 @@ sequelize.sync({force : false}).then(()=>{
   console.log("synced");
 
 })
+console.log(Object.keys(sequelize.models));
 
 export default sequelize

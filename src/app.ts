@@ -6,26 +6,27 @@ dotenv.config();
 import "./Database/connection"
 // require("./Model/index.ts")
 import userRouter from "./Routes/userRoute";
-import postRouter from "./Routes/postRoute"
+import postRouter from "./Routes/productRoute"
 import path from "node:path";
 import adminSeeder from "./adminSeeder";
 
-adminSeeder();
 
 app.use(express.json());
 app.get("/",(req,res)=>{
   res.send("hello world");
 })
 
-app.use("/",postRouter);
 
 app.use("",userRouter);
+app.use("/admin/product",postRouter);
+
 
 
 app.use(express.static(path.join(process.cwd(), "src/storage")));
 
 
 
+adminSeeder();
 
 
 app.listen(PORT,()=>{
