@@ -8,6 +8,9 @@ import "./Database/connection"
 import userRouter from "./Routes/userRoute";
 import postRouter from "./Routes/postRoute"
 import path from "node:path";
+import adminSeeder from "./adminSeeder";
+
+adminSeeder();
 
 app.use(express.json());
 app.get("/",(req,res)=>{
