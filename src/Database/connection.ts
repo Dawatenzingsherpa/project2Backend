@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
+import User from "./models/userModel";
+import Product from "./models/productModel";
 const sequelize = new Sequelize({
   database : process.env.DB_NAME!,
   dialect : "mysql",
@@ -23,6 +25,11 @@ sequelize.sync({force : false}).then(()=>{
   console.log("synced");
 
 })
-console.log(Object.keys(sequelize.models));
+
+
+//Relationships
+User.hasMany(Product,{foreignKey:'userId'});
+Product.belongsTo(User,{foreignKey:'userId'})
+
 
 export default sequelize

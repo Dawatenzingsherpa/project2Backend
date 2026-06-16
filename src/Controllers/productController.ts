@@ -1,13 +1,14 @@
 import { Request,Response } from "express";
 import Product from "../Database/models/productModel";
 import { describe } from "node:test";
+import { AuthRequest } from "../Middleware/authMiddleware";
 
 
 
 
 class ProductController{
-  public static async addProduct(req:Request,res: Response):Promise<void>{
-    
+  public static async addProduct(req:AuthRequest,res: Response):Promise<void>{
+    const userId = req.user?.id;
     let filename; 
     const {productName,productPrice,description,productTotalStockQty} = req.body;
     if(req.file){
@@ -29,7 +30,8 @@ class ProductController{
       productPrice,
       description,
       productTotalStockQty,
-      imageUrl : filename
+      imageUrl : filename,
+      userId : userId
     })
 
     res.status(201).json({

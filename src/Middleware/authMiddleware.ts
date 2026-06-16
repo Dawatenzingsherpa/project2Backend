@@ -1,7 +1,7 @@
 import { NextFunction, Request,Response } from "express";
 import jwt from 'jsonwebtoken'
 import User from "../Database/models/userModel";
-interface AuthRequest extends Request{
+export interface AuthRequest extends Request{
   user?:{
     username : string,
     email : string,
