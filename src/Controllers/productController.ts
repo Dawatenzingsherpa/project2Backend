@@ -10,7 +10,7 @@ class ProductController{
   public static async addProduct(req:AuthRequest,res: Response):Promise<void>{
     const userId = req.user?.id;
     let filename; 
-    const {productName,productPrice,description,productTotalStockQty} = req.body;
+    const {productName,productPrice,description,productTotalStockQty,categoryId} = req.body;
     if(req.file){
       filename = req.file.filename;
     }else{
@@ -18,9 +18,9 @@ class ProductController{
         message : "file is missing"
       })
     }
-    if(!description || !productName || !productPrice || !productTotalStockQty){
+    if(!description || !productName || !productPrice || !productTotalStockQty||!categoryId){
       res.status(400).json({
-        message : "please provide productName,productPrice,productDescription,productTotalStockQty "
+        message : "please provide productName,productPrice,productDescription,productTotalStockQty,categoryId "
       })
       return;
     }
@@ -31,7 +31,8 @@ class ProductController{
       description,
       productTotalStockQty,
       imageUrl : filename,
-      userId : userId
+      userId : userId,
+      categoryId: categoryId
     })
 
     res.status(201).json({

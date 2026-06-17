@@ -9,6 +9,7 @@ import userRouter from "./Routes/userRoute";
 import postRouter from "./Routes/productRoute"
 import path from "node:path";
 import adminSeeder from "./adminSeeder";
+import categoryController from "./Controllers/categoryController";
 
 
 app.use(express.json());
@@ -30,5 +31,6 @@ adminSeeder();
 
 
 app.listen(PORT,()=>{
+  categoryController.seedCategory();
   console.log("Server has started at port",PORT);
 })
