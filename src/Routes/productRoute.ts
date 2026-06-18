@@ -14,5 +14,17 @@ router.route("/")
 )
 .get(ProductController.getProduct);
 
+router.route("/:id")
+.get(ProductController.getSingleProduct)
+.delete(authMiddleware.isAuthenticated,
+  authMiddleware.restrictTo(Role.Admin),
+  ProductController.deleteProduct
+).patch(
+  authMiddleware.isAuthenticated,
+  authMiddleware.restrictTo(Role.Admin),
+  upload.single('image'),
+  ProductController.updateProduct
+);
+
 
 export default router
