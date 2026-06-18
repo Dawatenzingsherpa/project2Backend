@@ -6,10 +6,11 @@ dotenv.config();
 import "./Database/connection"
 // require("./Model/index.ts")
 import userRouter from "./Routes/userRoute";
-import postRouter from "./Routes/productRoute"
+import productRouter from "./Routes/productRoute"
 import path from "node:path";
 import adminSeeder from "./adminSeeder";
 import categoryController from "./Controllers/categoryController";
+import categoryRouter from "./Routes/categoryRoute"
 
 
 app.use(express.json());
@@ -19,7 +20,8 @@ app.get("/",(req,res)=>{
 
 
 app.use("",userRouter);
-app.use("/admin/product",postRouter);
+app.use("/admin/product",productRouter);
+app.use("/admin/category",categoryRouter);
 
 
 
