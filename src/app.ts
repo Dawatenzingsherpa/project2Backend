@@ -11,6 +11,7 @@ import path from "node:path";
 import adminSeeder from "./adminSeeder";
 import categoryController from "./Controllers/categoryController";
 import categoryRouter from "./Routes/categoryRoute"
+import cartRouter from './Routes/cartRoute'
 
 
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get("/",(req,res)=>{
 app.use("",userRouter);
 app.use("/admin/product",productRouter);
 app.use("/admin/category",categoryRouter);
+app.use("/customer/cart",cartRouter);
 
 
 

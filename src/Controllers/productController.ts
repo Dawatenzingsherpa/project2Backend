@@ -19,6 +19,7 @@ class ProductController{
       res.status(400).json({
         message : "file is missing"
       })
+      return
     }
     if(!description || !productName || !productPrice || !productTotalStockQty||!categoryId){
       res.status(400).json({
