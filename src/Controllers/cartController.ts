@@ -78,6 +78,73 @@ class CartController{
       data :cartItems
     })
   }
+
+
+  async deleteMyCartItem(req:AuthRequest,res:Response):Promise<void>{
+    const userId = req.user?.id;
+    const {productId} = req.params
+
+    const data = await Cart.findAll({
+      where : {
+        userId,
+        productId
+      }
+    })
+
+    if(data.length === 0){
+      res.status(404).json({
+        message : "No CartItem with that productId"
+      })
+      return 
+    }
+
+    await Cart.destroy({
+      where : {
+        productId,
+        userId
+      }
+    })
+
+    res.status(200).json({
+      message : "CartItem deleted successfully"
+      
+    })
+  }
+
+  async updateMyCartItem(req:AuthRequest,res:Response):Promise<void>{
+    const userId = req.user?.id;
+    const {productId} = req.params
+    const {quantity} = req.body
+
+    if(!quantity){
+      res.status(404).json({
+        message : "please provide quantity"
+      })
+      return
+    }
+
+    const cartData = await Cart.findOne({
+      where : {
+        userId,
+        productId
+      }
+    })
+    if(!cartData){
+      res.status(404).json({
+        message : "no cartItem with that productId"
+      })
+      return
+    }
+
+
+    cartData.quantity = quantity
+    cartData.save();
+
+    res.status(200).json({
+      message : "CartItem updated successfully",
+      data : cartData
+    })
+  }
 }
 
 
