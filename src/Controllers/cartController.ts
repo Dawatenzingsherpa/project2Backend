@@ -51,7 +51,7 @@ class CartController{
       include:[
         {
           model : Product,
-          attributes : ['id','productName','description','productPrice','categoryId'],
+          attributes : ['id','productName','productPrice','categoryId'],
           include : [
             {
               model : Category,
@@ -63,7 +63,9 @@ class CartController{
           model : User,
           attributes : ['id','email','username']
         }
-      ]
+      
+      ],
+      attributes : ['id','productId','userId']
     })
 
     if(cartItems.length == 0){
