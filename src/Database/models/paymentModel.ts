@@ -23,8 +23,8 @@ class Payment extends Model{
   declare id : string
 
   @Column({
-    type : DataType.ENUM('COD','Khalti','Esewa'),
-    defaultValue : 'COD'
+    type : DataType.ENUM('cod','Khalti','Esewa'),
+    defaultValue : 'cod'
   })
   declare paymentMethod : string
 
@@ -36,9 +36,9 @@ class Payment extends Model{
 
   @Column({
     type : DataType.STRING,
-    allowNull : false
+    
   })
-  declare pidx: string
+  declare pidx: string 
 }
 
 

@@ -5,13 +5,14 @@ import * as dotenv from 'dotenv'
 dotenv.config();
 import "./Database/connection"
 // require("./Model/index.ts")
-import userRouter from "./Routes/userRoute";
-import productRouter from "./Routes/productRoute"
+import userRoute from "./Routes/userRoute";
+import productRoute from "./Routes/productRoute"
 import path from "node:path";
 import adminSeeder from "./adminSeeder";
 import categoryController from "./Controllers/categoryController";
-import categoryRouter from "./Routes/categoryRoute"
-import cartRouter from './Routes/cartRoute'
+import categoryRoute from "./Routes/categoryRoute"
+import cartRoute from './Routes/cartRoute'
+import orderRoute from './Routes/orderRoute'
 
 
 app.use(express.json());
@@ -20,10 +21,11 @@ app.get("/",(req,res)=>{
 })
 
 
-app.use("",userRouter);
-app.use("/admin/product",productRouter);
-app.use("/admin/category",categoryRouter);
-app.use("/customer/cart",cartRouter);
+app.use("",userRoute);
+app.use("/admin/product",productRoute);
+app.use("/admin/category",categoryRoute);
+app.use("/customer/cart",cartRoute);
+app.use("/customer/order",orderRoute)
 
 
 

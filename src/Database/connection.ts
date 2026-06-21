@@ -49,8 +49,8 @@ User.hasMany(Cart,{foreignKey: "userId"});
 Cart.belongsTo(User,{foreignKey : "userId"});
 
 //order and orderDetails relationship
-OrderDetail.hasMany(Order,{foreignKey : 'orderId'})
-Order.belongsTo(OrderDetail,{foreignKey: 'orderId'})
+Order.hasMany(OrderDetail,{foreignKey : 'orderId'})
+OrderDetail.belongsTo(Order,{foreignKey: 'orderId'})
 
 //orderDetails and product relationship
 Product.hasMany(OrderDetail,{foreignKey : 'productId'})
@@ -66,8 +66,6 @@ Order.belongsTo(Payment,{foreignKey: 'paymentId'})
 User.hasMany(Order,{foreignKey : "userId"})
 Order.belongsTo(User,{foreignKey : "userId"})
 
-//order and user relationship
-User.hasMany(OrderDetail,{foreignKey : "userId"})
-OrderDetail.belongsTo(User,{foreignKey : "userId"})
+
 
 export default sequelize

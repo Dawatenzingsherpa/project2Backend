@@ -6,7 +6,7 @@ export interface OrderData{
   paymentDetails : {
     paymentMethod : PaymentMethod,
     paymentStatus ?: PaymentStatus,
-    pidx? : string
+    pidx ?: string
   }
 
   items : OrderDetails[]
@@ -18,7 +18,7 @@ export interface OrderDetails{
 }
 
 
-enum PaymentMethod{
+export enum PaymentMethod{
   Cod = 'cod',
   Khalti = 'khalti'
 }
@@ -26,4 +26,12 @@ enum PaymentMethod{
 enum PaymentStatus{
   Paid = 'paid',
   Unpaid = 'unpaid'
+}
+
+export interface KhaltiResponse{
+  pidx :string,
+  payment_url : string,
+  expires_at : Date | string,
+  expire_in : string,
+  user_fee : number
 }
