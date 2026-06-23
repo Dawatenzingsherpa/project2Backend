@@ -114,6 +114,29 @@ class OrderController{
       })
     }
   }
+
+
+  async fetchMyOrder(req:AuthRequest,res:Response):Promise<void>{
+    const userId  = req.user?.id
+    
+    const orders = await Order.findAll({
+      where : {
+        userId
+      }
+    })
+
+    if(orders.length> 0){
+      res.status(200).json({
+        message : "Order Fetched successfully",
+        data : orders
+      })
+    }else {
+      res.status(400).json({
+        message : "you dont have any orders",
+        data : []
+      })
+    }
+  }
 }
 
 export default new OrderController()
