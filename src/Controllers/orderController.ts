@@ -122,7 +122,16 @@ class OrderController{
     const orders = await Order.findAll({
       where : {
         userId
-      }
+      },include: [
+        {
+          model : Payment,
+          attributes : ['paymentMethod',"paymentStatus"]
+        },
+        {
+          model : OrderDetail,
+          attributes : ['quantity','productId']
+        }
+      ]
     })
 
     if(orders.length> 0){
@@ -133,6 +142,38 @@ class OrderController{
     }else {
       res.status(400).json({
         message : "you dont have any orders",
+        data : []
+      })
+    }
+  }
+
+  async fetchOrder(req:AuthRequest,res:Response):Promise<void>{
+    const userId  = req.user?.id
+    const {orderId}= req.params
+    
+    const order = await Order.findAll({
+      where : {
+        id  : orderId
+      },include: [
+        {
+          model : Payment,
+          attributes : ['paymentMethod',"paymentStatus"]
+        },
+        {
+          model : OrderDetail,
+          attributes : ['quantity','productId']
+        }
+      ]
+    })
+
+    if(order.length> 0){
+      res.status(200).json({
+        message : "Order Fetched successfully",
+        data : order
+      })
+    }else {
+      res.status(400).json({
+        message : "No order with that id",
         data : []
       })
     }
