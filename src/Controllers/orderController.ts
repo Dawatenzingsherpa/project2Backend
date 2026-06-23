@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../Middleware/authMiddleware";
-import { OrderData } from "../types/OrderTypes";
+import { OrderData, TransactionStatus, TransactionVerifyResponse } from "../types/OrderTypes";
 import Order from "../Database/models/orderModel";
 import Payment from "../Database/models/paymentModel";
 import { PaymentMethod,KhaltiResponse } from "../types/OrderTypes";
@@ -8,6 +8,7 @@ import OrderDetail from "../Database/models/orderDetails";
 import axios from "axios";
 
 import Product from "../Database/models/productModel";
+import { where } from "sequelize";
 
 class OrderController{
   async createOrder(req:AuthRequest,res:Response):Promise<void>{
@@ -52,7 +53,6 @@ class OrderController{
         purchase_order_name : "orderName_" + orderData.id
       }
 
-
     const response =  await axios.post("https://dev.khalti.com/api/v2/epayment/initiate/",data,{
         headers : {
           'Authorization' : 'key 04413cfb082949fe94671d07a74a0668'
@@ -73,6 +73,44 @@ class OrderController{
     }else{
       res.status(201).json({
         message : "order placed successfully"
+      })
+    }
+  }
+
+  async verifyTransaction(req:AuthRequest,res:Response):Promise<void>{
+    const {pidx} = req.body
+    if(!pidx){
+      res.status(400).json({
+        message : "please provide pidx"
+      })
+      return
+    }
+
+    const response = await axios.post("https://dev.khalti.com/api/v2/epayment/lookup/",{pidx},{
+      headers: {
+        'Authorization' : "key 04413cfb082949fe94671d07a74a0668"
+      }
+    })
+    
+
+    const data:TransactionVerifyResponse = response.data;
+
+    if(data.status===TransactionStatus.Completed){
+      await Payment.update({
+        paymentStatus : "paid"
+      },{
+        where :  {
+          pidx 
+        }
+      })
+
+      res.status(200).json({
+        message : "Payment verified successfully"
+      })
+      
+    }else {
+      res.status(200).json({
+        message : "Payment not verified"
       })
     }
   }
