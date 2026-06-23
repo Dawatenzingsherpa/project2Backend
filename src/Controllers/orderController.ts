@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../Middleware/authMiddleware";
-import { OrderData, TransactionStatus, TransactionVerifyResponse } from "../types/OrderTypes";
+import { OrderData, OrderStatus, TransactionStatus, TransactionVerifyResponse } from "../types/OrderTypes";
 import Order from "../Database/models/orderModel";
 import Payment from "../Database/models/paymentModel";
 import { PaymentMethod,KhaltiResponse } from "../types/OrderTypes";
@@ -115,6 +115,7 @@ class OrderController{
     }
   }
 
+  //customer side starts
 
   async fetchMyOrder(req:AuthRequest,res:Response):Promise<void>{
     const userId  = req.user?.id
@@ -168,6 +169,43 @@ class OrderController{
       })
     }
   }
+
+  async cancelMyOrder(req:AuthRequest,res : Response):Promise<void>{
+    const userId = req.user?.id;
+    const {orderId} = req.params
+
+    const [order] = await Order.findAll({
+      where : {
+        userId,
+        id : orderId
+      }
+    })
+    
+    if(order){
+      if(order?.orderStatus === (OrderStatus.OntheWay || OrderStatus.Preparing)){
+        res.status(200).json({
+          message : "Order cannot be cancelled.Order is on the way or preparing"
+        })
+        return
+      }
+      order.orderStatus = OrderStatus.Cancelled;
+      order.save();
+
+      res.status(200).json({
+        message : "Order cancelled successfully",
+        data : order
+      })
+    }else {
+      res.status(400).json({
+        message : "No order of that id",
+        data : []
+      })
+    }
+    
+
+    
+  }
+  //customer side ends here
 }
 
 export default new OrderController()

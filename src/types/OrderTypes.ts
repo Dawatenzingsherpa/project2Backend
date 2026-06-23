@@ -51,5 +51,15 @@ export interface TransactionVerifyResponse{
 export enum TransactionStatus{
   Completed = "Completed",
   Pending = "Pending",
-  Cancelled =  "Cancelled"
+  Initiated = "Initiated",
+  Refunded = "Refunded"
+}
+
+
+export enum OrderStatus {
+  Pending  = "pending",
+  delivered = 'delivered',
+  OntheWay = 'ontheWay',
+  Cancelled = 'cancelled',
+  Preparing = 'preparing'
 }
