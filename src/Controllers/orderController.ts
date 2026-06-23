@@ -147,33 +147,23 @@ class OrderController{
     }
   }
 
-  async fetchOrder(req:AuthRequest,res:Response):Promise<void>{
-    const userId  = req.user?.id
+  async fetchOrderDetail(req:AuthRequest,res:Response):Promise<void>{
     const {orderId}= req.params
     
-    const order = await Order.findAll({
+    const orderDetails = await OrderDetail.findAll({
       where : {
-        id  : orderId
-      },include: [
-        {
-          model : Payment,
-          attributes : ['paymentMethod',"paymentStatus"]
-        },
-        {
-          model : OrderDetail,
-          attributes : ['quantity','productId']
-        }
-      ]
+        orderId
+      }
     })
 
-    if(order.length> 0){
+    if(orderDetails.length> 0){
       res.status(200).json({
-        message : "Order Fetched successfully",
-        data : order
+        message : "OrderDetails Fetched successfully",
+        data : orderDetails
       })
     }else {
       res.status(400).json({
-        message : "No order with that id",
+        message : "No orderDetails with that id",
         data : []
       })
     }

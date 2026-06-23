@@ -11,7 +11,7 @@ router.route("/")
 .post(authMiddleware.isAuthenticated,errorHandler(orderController.createOrder))
 .get(authMiddleware.isAuthenticated,orderController.fetchMyOrder)
 router.route("/verify").post(authMiddleware.isAuthenticated,errorHandler(orderController.verifyTransaction))
-router.route("/:orderId").get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrder))
+router.route("/:orderId").get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrderDetail))
 
 
 export default router
