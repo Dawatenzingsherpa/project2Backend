@@ -16,6 +16,7 @@ router.route("/verify")
 
 router.route("/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrderDetail))
+.patch(authMiddleware.isAuthenticated,errorHandler(orderController.changeOrderStatus))
 
 router.route("/cancel/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.cancelMyOrder))

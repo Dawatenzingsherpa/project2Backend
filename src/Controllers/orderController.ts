@@ -206,6 +206,41 @@ class OrderController{
     
   }
   //customer side ends here
+
+
+  async changeOrderStatus(req:AuthRequest,res:Response):Promise<void>{
+    const userId = req.user?.id;
+    const {orderId} = req.params;
+    const orderStatus:OrderStatus = req.body.orderStatus;
+    
+
+    if(!orderStatus){
+      res.status(400).json({
+        message : "please provide orderStatus"
+      })
+      return
+    }
+
+    if(Object.values(OrderStatus).includes(orderStatus)){
+      await Order.update({
+          orderStatus : orderStatus
+        },{
+          where : {
+            userId,
+            id : orderId
+        }
+      })
+
+      res.status(200).json({
+        message : "orderStatus changed Succesfully"
+      })
+    }else{
+      res.status(400).json({
+        message : "please provide appropriate orderStatus"
+      })
+    }
+    
+  }
 }
 
 export default new OrderController()
