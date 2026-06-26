@@ -287,12 +287,50 @@ class OrderController{
         message : "please provide unpaid or paid only paymentStatus"
       })
     }
-
-
     
   }
 
-  
+  async deleteOrder(req:AuthRequest,res:Response):Promise<void>{
+    const {orderId} = req.params;
+    const [order] = await Order.findAll({
+      where : {
+        id : orderId
+      }
+    })
+
+    if(!order){
+      res.status(400).json({
+        message : "no order of that id "
+      })
+      return
+    }
+
+    const extendedOrder :ExtendedOrder = order as ExtendedOrder;
+
+    await Payment.destroy({
+      where : {
+        id : extendedOrder.paymentId
+      }
+    })
+
+    await OrderDetail.destroy({
+      where : {
+        orderId
+      }
+    })
+
+    await Order.destroy({
+      where : {
+        id : orderId
+      }
+    })
+
+    res.status(200).json({
+      message : "Order deleted successfully"
+    })
+  }
+
+
 }
 
 export default new OrderController()

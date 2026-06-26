@@ -17,6 +17,7 @@ router.route("/verify")
 router.route("/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrderDetail))
 .patch(authMiddleware.isAuthenticated,errorHandler(orderController.changeOrderStatus))
+.delete(authMiddleware.isAuthenticated,errorHandler(orderController.deleteOrder))
 
 router.route("/payment/:orderId")
 .patch(authMiddleware.isAuthenticated,errorHandler(orderController.changePaymentStatus))
