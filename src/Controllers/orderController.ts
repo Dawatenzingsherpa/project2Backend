@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../Middleware/authMiddleware";
-import { OrderData, OrderStatus, TransactionStatus, TransactionVerifyResponse } from "../types/OrderTypes";
+import { OrderData, OrderStatus, PaymentStatus, TransactionStatus, TransactionVerifyResponse } from "../types/OrderTypes";
 import Order from "../Database/models/orderModel";
 import Payment from "../Database/models/paymentModel";
 import { PaymentMethod,KhaltiResponse } from "../types/OrderTypes";
@@ -9,6 +9,10 @@ import axios from "axios";
 
 import Product from "../Database/models/productModel";
 import { where } from "sequelize";
+
+class ExtendedOrder extends Order{
+  declare paymentId : string | null
+}
 
 class OrderController{
   async createOrder(req:AuthRequest,res:Response):Promise<void>{
@@ -241,6 +245,54 @@ class OrderController{
     }
     
   }
+
+  async changePaymentStatus(req:AuthRequest,res:Response):Promise<void>{
+    const orderId = req.params.orderId;
+    const paymentStatus:PaymentStatus = req.body.paymentStatus;
+    const [order] = await Order.findAll({
+      where : {
+        id : orderId
+      }
+    })
+    if(!paymentStatus){
+      res.status(400).json({
+        message : "please provide paymentStatus"
+      })
+      return
+    }
+
+    if(!order){
+      res.status(400).json({
+        message : "no order of that id "
+      })
+      return
+    }
+
+    const extendedOrder: ExtendedOrder = order as ExtendedOrder;
+
+    if(Object.values(PaymentStatus).includes(paymentStatus)){
+      await Payment.update({
+        paymentStatus : paymentStatus
+      },{
+        where : {
+          id : extendedOrder.paymentId
+        }
+      })
+
+      res.status(200).json({
+        message : "paymentStatus updated Successfully"
+    })
+    }else {
+      res.status(200).json({
+        message : "please provide unpaid or paid only paymentStatus"
+      })
+    }
+
+
+    
+  }
+
+  
 }
 
 export default new OrderController()

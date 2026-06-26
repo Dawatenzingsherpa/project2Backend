@@ -19,7 +19,7 @@ class AuthController{
         email : email
       }
     })
-    console.log(data);
+    
     if(data){
       res.status(404).json({
         message : "Email Already Registered"

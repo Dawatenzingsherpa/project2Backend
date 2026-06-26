@@ -18,6 +18,9 @@ router.route("/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrderDetail))
 .patch(authMiddleware.isAuthenticated,errorHandler(orderController.changeOrderStatus))
 
+router.route("/payment/:orderId")
+.patch(authMiddleware.isAuthenticated,errorHandler(orderController.changePaymentStatus))
+
 router.route("/cancel/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.cancelMyOrder))
 
