@@ -10,12 +10,14 @@ const router : Router = express.Router();
 router.route("/")
 .post(authMiddleware.isAuthenticated,errorHandler(orderController.createOrder))
 router.route("/customer")
-.get(authMiddleware.isAuthenticated,orderController.fetchMyOrder)
+.get(authMiddleware.isAuthenticated,authMiddleware.restrictTo(Role.Customer),orderController.fetchMyOrder)
+router.route("/admin")
+.get(authMiddleware.isAuthenticated,authMiddleware.restrictTo(Role.Admin),orderController.fetchOrder)
 
 router.route("/verify")
 .post(authMiddleware.isAuthenticated,errorHandler(orderController.verifyTransaction))
 
-router.route("/:orderId")
+router.route("/customer/:orderId")
 .get(authMiddleware.isAuthenticated,errorHandler(orderController.fetchOrderDetail))
 
 
