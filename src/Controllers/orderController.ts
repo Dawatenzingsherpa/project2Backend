@@ -330,6 +330,30 @@ class OrderController{
     })
   }
 
+  async fetchOrder(req:AuthRequest,res:Response):Promise<void>{
+    const orders = await Order.findAll({
+      include : [
+        {
+          model : Payment,
+          
+        }
+      ]
+    });
+    if(orders.length===0){
+      res.status(404).json({
+        message : " no Order in the database"
+      })
+      return
+    }
+
+    res.status(200).json({
+      message : "Orders Fetched successfully",
+      data : orders
+    })
+
+    
+  }
+
 
 }
 
